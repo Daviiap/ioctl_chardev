@@ -3,7 +3,8 @@
 #include <linux/init.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
-#include <linux/sev-guest.h>
+#include "sev-guest.h"
+#include "psp-sev.h"
 
 #define DEVICE_NAME "sev-guest"
 #define CLASS_NAME "char"
