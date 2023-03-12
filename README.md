@@ -16,7 +16,7 @@ After running the command, many files will be generated inside the directory, in
 sudo insmod chardev.ko
 ```
 
-Now, run `ls /dev/sev-guest` to verify if the device file has been created. If it is created, you can use [sev-guest tool](https://github.com/AMDESE/sev-guest) to make ioctl calls to the device.
+Now, run `ls /dev/sev-guest` to verify if the device file has been created. If it is created, you can use [sev-guest tool](https://github.com/Daviiap/go-sev-guest) to make ioctl calls to the device.
 
 ## Removing module:
 
