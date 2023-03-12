@@ -1,10 +1,10 @@
-# Dummy ioctl interface
+# Mock of a sev-guest device
 
-This is an implementation of a dummy ioctl device driver using the Linux kernel module interface.
+This is an implementation of a mock sev-guest device driver using the Linux kernel module interface.
 
-## Building the device module:
+## Building the sev-guest device module:
 
-To build the kernel module, navigate to `src/chardevmodule` and run:
+To build the kernel module, navigate to `src/` and run:
 
 ```bash
 make
@@ -16,33 +16,13 @@ After running the command, many files will be generated inside the directory, in
 sudo insmod chardev.ko
 ```
 
-Now, run `ls /dev/chardev` to verify if the device file has been created.
+Now, run `ls /dev/sev-guest` to verify if the device file has been created. If it is created, you can use [sev-guest tool](https://github.com/AMDESE/sev-guest) to make ioctl calls to the device.
 
-## Making ioctl calls:
+## Removing module:
 
-To test the device module, run the following command in a terminal:
-
-```bash
-dmesg -w
-# ...
-# [11429.799463] chardev: module loaded
-```
-
-This will display kernel logs.
-
-The module accepts the ioctl commands described in `src/chardevmodule/chardev.h`. To test it, build `src/main.c`. From inside the `src` directory, run:
+Navigate to `src/` and run:
 
 ```bash
-gcc -o main main.c && sudo ./main
-```
-
-You should see `ioctl command sent with arg 42` displayed in the terminal.
-
-In the terminal where `dmesg -w` is running, you should see the following output:
-
-```log
-[11851.371355] chardev: device opened
-[11851.371359] my_ioctl_device: MY_IOCTL_CMD received with arg 42
-[11851.371404] my_ioctl_device: MY_IOCTL_CMD received last arg: 42
-[11851.371406] chardev: device closed
+sudo rmmod chardev
+make clean
 ```
