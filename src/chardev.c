@@ -3,8 +3,7 @@
 #include <linux/init.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
-#include "sev-guest.h"
-#include "psp-sev.h"
+#include "./handlers/get-report.c"
 
 #define DEVICE_NAME "sev-guest"
 #define CLASS_NAME "char"
@@ -16,34 +15,6 @@ MODULE_DESCRIPTION("Mock of a sev-snp guest device.");
 static dev_t dev_num;
 static struct cdev cdev;
 static struct class *chardev_class = NULL;
-
-static int handle_get_report(unsigned long arg)
-{
-    printk(KERN_INFO "sev-guest: receiver get attestation report");
-
-    if (arg == 0)
-    {
-        printk(KERN_INFO "sev-guest: error: arg is NULL");
-        return -EINVAL;
-    }
-
-    struct snp_guest_request_ioctl request;
-    if (copy_from_user(&request, (int *)arg, sizeof(request)))
-    {
-        printk(KERN_INFO "sev-guest: error copying request data from user.");
-        return -EFAULT;
-    }
-
-    request.msg_version = 2;
-
-    if (copy_to_user((int *)arg, &request, sizeof(request)))
-    {
-        printk(KERN_INFO "sev-guest: error");
-        return -EFAULT;
-    }
-
-    return 0;
-}
 
 static long device_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
