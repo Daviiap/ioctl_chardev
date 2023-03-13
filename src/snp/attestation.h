@@ -52,7 +52,17 @@ struct attestation_report
     union tcb_version reported_tcb;
     uint8 reserved1[24];
     uint8 chip_id[64];
-    uint8 reserved2[192];
+    union tcb_version commited_tcb;
+    uint8 current_build;
+    uint8 current_minor;
+    uint8 current_major;
+    uint8 reserved2;
+    uint8 commited_build;
+    uint8 commited_minor;
+    uint8 commited_major;
+    uint8 reserved3;
+    union tcb_version launch_tcb;
+    uint8 reserved4[168];
     struct signature signature;
 };
 
